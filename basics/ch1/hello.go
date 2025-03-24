@@ -1,5 +1,7 @@
-package main // 和 Java 类似，模块，但是 package 名字不一定要和目录名一致
+package main
 
+// 和 Java 类似，模块，但是 package 名不需要与目录名一致
+// 但需要约定同一目录的 Go 代码 package 要保持一致
 import (
 	"fmt"
 	"os"

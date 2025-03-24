@@ -7,17 +7,17 @@ import (
 
 func TestFibonacci(t *testing.T) {
 	// 类型关键字在后面（一般用于变量声明，主要是全局/外部）
-	// 静态类型（与 Python 相同）
+	// 静态类型（与 Python/JavaScript 不同）
 	//var a int = 1
 	//var b int = 1
 
-	// 简写形式，具有自动类型推断* （与 Java 不同）
+	// 虽然是静态类型，但具有自动类型推断* （与 Java 不同）
 	//var (
 	//	a = 1
 	//	b = 1
 	//)
 
-	// 最简单写法，支持多个变量赋值* （与 Python 相同）
+	// 短声明，支持多个变量赋值* （与 Python 相同）
 	a, b := 1, 1
 
 	fmt.Print(a, ",")

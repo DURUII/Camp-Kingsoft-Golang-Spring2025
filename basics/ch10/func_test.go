@@ -59,3 +59,32 @@ func TestDefer(t *testing.T) {
 	// defer 仍然会执行
 	panic("Fatal error")
 }
+
+func TestDefer2(t *testing.T) {
+	var f = func() {
+		defer fmt.Println("D")
+		fmt.Println("F")
+	}
+
+	f()
+	fmt.Println("M")
+	// output: F D M
+}
+
+func TestDefer3(t *testing.T) {
+	var f = func(i int) (r int) {
+		defer func() {
+			r += i
+		}()
+
+		/*
+			流程：
+			先将返回值result设为2
+			执行defer语句，将result更新
+			真正返回给调用方
+		*/
+		return 2
+	}
+
+	fmt.Println(f(10))
+}

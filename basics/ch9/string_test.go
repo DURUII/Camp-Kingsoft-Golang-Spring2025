@@ -1,6 +1,9 @@
 package ch9
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestString(t *testing.T) {
 	// string 不是引用/指针类型，空值为 ""
@@ -19,6 +22,13 @@ func TestString(t *testing.T) {
 	t.Logf("杜 unicode %x", chars[0])
 	t.Logf("杜 utf-8 %x", s[:3])
 	// string 的 byte 数组可以存放任何数据
+}
+
+func TestString2(t *testing.T) {
+	str := "hello"
+	// cannot assign to str[0] (value of type byte)
+	str[0] = 'x'
+	fmt.Println(str)
 }
 
 func TestRune(t *testing.T) {
