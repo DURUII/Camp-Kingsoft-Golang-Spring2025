@@ -3,6 +3,6 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "lumache"
-authors = [{name = "DURUII", email = "wust.durui@@lumache"}]
+name = "bridge2golang"
+authors = [{name = "DURUII", email = "wust.durui@gmail.com"}]
 dynamic = ["version", "description"]
