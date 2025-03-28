@@ -1,7 +1,8 @@
-# Bridge2Golang
+Bridge2Golang
+=============
 
-```{toctree}
+.. toctree::
 :maxdepth: 2
 :caption: 目录
 
-basics.md
+basics
