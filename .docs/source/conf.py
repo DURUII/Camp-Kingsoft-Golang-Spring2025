@@ -23,6 +23,8 @@ extensions = [
 # 可选，允许部分 reST 指令（包括 include）
 myst_enable_extensions = [
     "colon_fence",
+    "dollarmath",
+    "amsmath",
     "deflist",
     "html_admonition",
     "html_image",
