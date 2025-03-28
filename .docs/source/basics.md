@@ -6,7 +6,7 @@
 
 命名规则：下划线在 Go 语言中特殊作用，Go 的命名规则是用全小写字母形式的短小单词命名，无需分隔符，例如，你可以创建`helloworld.go`。
 
-```{literalinclude} ../path/to/code.py
+```{literalinclude} ../basics/ch01/helloworld.go
 :language: go
 :linenos:
 
