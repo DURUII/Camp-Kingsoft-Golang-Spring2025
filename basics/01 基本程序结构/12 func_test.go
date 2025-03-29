@@ -1,4 +1,4 @@
-package ch10
+package main
 
 import (
 	"fmt"
@@ -22,7 +22,7 @@ func timeit(inner func(int) int) func(int) int {
 	}
 }
 
-func TestFunc(t *testing.T) {
+func TestFunctionAsValue(t *testing.T) {
 	// 值传递，函数可以作为变量值、参数、返回值，可以有多个返回值
 	t.Log(timeit(cubic)(9))
 }
@@ -36,20 +36,20 @@ func sum(ops ...int) int {
 	return sum(ops[1:]...) + ops[0]
 }
 
-func sum2(ops ...int) int {
-	sum := 0
+func sumIter(ops ...int) int {
+	ret := 0
 	for _, op := range ops {
-		sum += op
+		ret += op
 	}
-	return sum
+	return ret
 }
 
-func TestVariadic(t *testing.T) {
+func TestVariadicArguments(t *testing.T) {
 	t.Log(sum(1, 2, 3, 4, 5))
-	t.Log(sum2(1, 2, 3, 4, 5))
+	t.Log(sumIter(1, 2, 3, 4, 5))
 }
 
-func TestDefer(t *testing.T) {
+func TestDeferWithPanic(t *testing.T) {
 	// 函数（异常）返回前，类似于 Java 的 finally
 	// 通常用于（安全地）释放资源
 	defer func() {
@@ -60,7 +60,7 @@ func TestDefer(t *testing.T) {
 	panic("Fatal error")
 }
 
-func TestDefer2(t *testing.T) {
+func TestDeferExecutionOrder(t *testing.T) {
 	var f = func() {
 		defer fmt.Println("D")
 		fmt.Println("F")
@@ -71,7 +71,7 @@ func TestDefer2(t *testing.T) {
 	// output: F D M
 }
 
-func TestDefer3(t *testing.T) {
+func TestDeferModifiesReturn(t *testing.T) {
 	var f = func(i int) (r int) {
 		defer func() {
 			r += i
@@ -87,4 +87,16 @@ func TestDefer3(t *testing.T) {
 	}
 
 	fmt.Println(f(10))
+}
+
+func GetFn() func() {
+	fmt.Print("[outside]")
+	return func() {
+		fmt.Print("[Inside]")
+	}
+}
+
+func TestDeferWithFunctionCall(t *testing.T) {
+	defer GetFn()()
+	fmt.Print("[here]")
 }

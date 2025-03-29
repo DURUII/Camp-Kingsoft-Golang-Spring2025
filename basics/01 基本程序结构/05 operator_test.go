@@ -1,13 +1,19 @@
-package ch4
+package main
 
 import "testing"
 
-func TestCompareArray(t *testing.T) {
+func TestCompareOperator(t *testing.T) {
+	var i int
 	// Go 语言没有前置的 ++/-- （Python 连后置都没有）
+	i += 1
 
-	// 在比较数组时，主流语言比较引用是否相同
+	// 在比较数组时，主流语言比较引用是否相同，但是 Go 语言中：
 	// 1. 相同维数可以比较
 	// 2. 每个元素都相同才相等 (与 Python 相同)
+
+	// 只有指针、接口、切片、channel、map 和函数的默认值为 nil
+	// 而数组、结构体是复合类型，是它们组成元素都为零值的结果
+	// 切⽚是不可以⽐较的，运⾏后报错
 	a := [...]int{1, 2, 3}
 	b := [...]int{1, 2, 4}
 	t.Log(&a == &b)
@@ -16,8 +22,7 @@ func TestCompareArray(t *testing.T) {
 	t.Log(a == b)
 }
 
-func TestName(t *testing.T) {
-	// 按位清零
+func TestBitwiseClear(t *testing.T) {
 	const (
 		Readable = 1 << iota
 		Writable
@@ -29,7 +34,7 @@ func TestName(t *testing.T) {
 		a&Readable == Readable,
 		a&Writable == Writable,
 		a&Executable == Executable,
-		a&^Readable == Readable,
+		a&^Readable == Readable, // 按位清零
 		a&^Writable == Writable,
 		a&^Executable == Executable,
 	)

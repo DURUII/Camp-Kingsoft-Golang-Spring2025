@@ -1,4 +1,4 @@
-package ch5
+package main
 
 import (
 	"fmt"
@@ -19,7 +19,7 @@ func TestSwitch(t *testing.T) {
 	}
 }
 
-func TestSwitch2(t *testing.T) {
+func TestFallthrough(t *testing.T) {
 	isMatch := func(i int) bool {
 		switch i {
 		case 1:

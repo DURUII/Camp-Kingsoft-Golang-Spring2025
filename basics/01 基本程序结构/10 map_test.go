@@ -1,6 +1,9 @@
-package ch7
+package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestMap(t *testing.T) {
 	// 声明 + 初始化
@@ -64,4 +67,22 @@ func TestMapIteration(t *testing.T) {
 	// 删除元素
 	delete(m1, 4)
 	t.Log(len(m1))
+}
+
+func TestMapIterationOrder(t *testing.T) {
+	// 注意，map 输出结果是有意而为地随机化的，用于防止程序员偷懒
+	m := map[int]int{1: 1, 2: 4, 3: 9, 4: 16}
+	for k := 0; k < 10; k++ {
+		for key, _ := range m {
+			fmt.Printf("%d ", key)
+		}
+		fmt.Println()
+	}
+}
+
+func TestMapWithFuncValue(t *testing.T) {
+	// 与 Python/JavaScript 类似，支持部分函数式编程特性
+	intFunc := map[string]func(op int) int{}
+	intFunc["cubic"] = func(op int) int { return op * op * op }
+	t.Log(intFunc["cubic"](9))
 }

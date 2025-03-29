@@ -1,4 +1,4 @@
-package ch5
+package main
 
 import (
 	"fmt"
@@ -30,7 +30,7 @@ func TestForLoop(t *testing.T) {
 		fmt.Println(i)
 	}
 
-	// 也不支持链式赋值（与 C 不同）
+	// 不支持链式赋值（与 C 不同）
 	//i := 10
 	//x := i++
 }
