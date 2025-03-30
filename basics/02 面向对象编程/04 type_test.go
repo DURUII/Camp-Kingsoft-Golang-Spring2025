@@ -25,6 +25,6 @@ func timeit(inner IntConv) IntConv {
 	}
 }
 
-func TestType(t *testing.T) {
+func TestCustomizedType(t *testing.T) {
 	t.Log(timeit(cubic)(9))
 }

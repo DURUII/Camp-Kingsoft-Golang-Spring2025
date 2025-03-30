@@ -1,4 +1,4 @@
-package ch12
+package ch11
 
 import "fmt"
 
@@ -12,6 +12,7 @@ func (p *Pet) Speak() {
 
 func (p *Pet) SpeakTo(host string) {
 	p.Speak()
+	// Go 是不⽀持继承的
 	fmt.Println(" ", host)
 }
 
