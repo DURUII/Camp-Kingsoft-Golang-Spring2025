@@ -1,4 +1,4 @@
-package _4_错误处理
+package ch02
 
 import (
 	"errors"
