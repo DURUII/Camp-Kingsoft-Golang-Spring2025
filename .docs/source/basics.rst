@@ -1,13 +1,6 @@
 基本程序结构
 ===============
 
-Hello World
-----------------
-
-.. literalinclude:: ../../basics/01 基本程序结构/00 helloworld.go
-   :language: go
-   :linenos:
-
 变量
 ------------------
 
