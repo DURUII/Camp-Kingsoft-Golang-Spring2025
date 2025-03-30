@@ -1,4 +1,4 @@
-package ch14
+package _4_错误处理
 
 import (
 	"errors"
@@ -27,7 +27,7 @@ func TestPanic(t *testing.T) {
 
 func TestRecover(t *testing.T) {
 	defer func() {
-		// 错误恢复机制 or “Let it Crash!”：避免僵尸进程
+		// 尽管如此，错误恢复机制 & “Let it Crash!”：避免僵尸进程
 		if err := recover(); err != nil {
 			fmt.Println("recovered from", err)
 		}
