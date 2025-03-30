@@ -6,7 +6,8 @@ import (
 )
 
 func TestMap(t *testing.T) {
-	// 声明 + 初始化
+	// 声明 + 初始化： key 的类型必须支持“==”和“!=”两种比较操作符
+	// 例如，函数类型、map，以及切片只支持与 nil 的比较，就不能做 key
 	m1 := map[int]int{1: 1, 2: 4, 3: 9, 4: 16}
 	t.Log(m1[2])
 	t.Logf("len m1=%d", len(m1))
@@ -21,7 +22,7 @@ func TestMap(t *testing.T) {
 	t.Log(m3, len(m3))
 }
 
-func TestNonExist(t *testing.T) {
+func TestMapBasedSet(t *testing.T) {
 	// Go 语言没有提供 set，但可以通过 map 实现类似的功能
 	m1 := map[int]int{2: 8}
 
@@ -47,33 +48,34 @@ func TestNonExist(t *testing.T) {
 	}
 	```*/
 
-	// 当 key 不存在时，默认返回零值
-	// 这类似 Python 中 map.get(key, default)，而 default 系统自动返回
-	if val, ok := m1[3]; ok {
+	// 当 key 不存在时，默认返回零值*
+	// 所以我们无法通过 val 判断出，究竟是因为 key 不存在返回的零值，
+	// 还是因为 key 本身对应的 value 就是 0
+	if val, ok := m1[3]; ok { // “comma ok”的惯用法，这类似 Python 中 map.get(key, default)，而 default 系统自动返回
 		t.Log("retrieved val =", val)
 	} else {
 		t.Log("key not found")
 	}
 }
 
-func TestMapIteration(t *testing.T) {
+func TestMapOperation(t *testing.T) {
 	m1 := map[int]int{1: 1, 2: 4, 3: 9, 4: 16}
-	// 数组第一个值是 index，不是 key
-	for k, v := range m1 {
-		t.Log(k, "=>", v)
-	}
-	t.Log(len(m1))
+	// 插入数据
+	m1[5] = 25
+	t.Log(m1[2], len(m1)) // 不支持 cap
 
 	// 删除元素
 	delete(m1, 4)
+	delete(m1, 100) // 执行也不会失败，不会抛出运行时的异常
 	t.Log(len(m1))
 }
 
 func TestMapIterationOrder(t *testing.T) {
-	// 注意，map 输出结果是有意而为地随机化的，用于防止程序员偷懒
+	// 注意，map 输出次序是有意而为地随机化的，用于防止程序员偷懒
 	m := map[int]int{1: 1, 2: 4, 3: 9, 4: 16}
 	for k := 0; k < 10; k++ {
-		for key, _ := range m {
+		// 也可以写成 key, _ := range m
+		for key := range m {
 			fmt.Printf("%d ", key)
 		}
 		fmt.Println()

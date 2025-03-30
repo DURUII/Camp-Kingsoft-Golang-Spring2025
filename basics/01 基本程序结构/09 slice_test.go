@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestRefSlice(t *testing.T) {
 	a := []int{1, 2, 3}
@@ -10,7 +13,8 @@ func TestRefSlice(t *testing.T) {
 }
 
 func TestSliceCap(t *testing.T) {
-	// 没有...表示，一个切片（可变长数组）
+	// 没有...表示，一个切片（可变长数组），支持零值可用*
+	// 注意，map 不支持零值可用
 	var s0 []int
 	t.Log(len(s0), cap(s0))
 	// 切片有len/cap，用 make 指定容量，避免扩容复制*
@@ -44,4 +48,25 @@ func TestSliceSharedMem(t *testing.T) {
 	summer[0] = "Unknown"
 	// 共享存储空间
 	t.Log(year, Q2, summer)
+}
+
+func TestSliceForRangeBug(t *testing.T) {
+	a := []int{1, 2, 3}
+	b := []*int{}
+	// 注意，遍历过程没有返回集合中的实际元素
+	// 而是复制在了一个“固定”的变量（值传递），例如 i
+	// *复制操作可能会存在性能问题
+	for _, i := range a {
+		b = append(b, &i)
+	}
+	// 相当于
+	//var i int
+	//for k := 0; k < len(a); k++ {
+	//	i = a[k]
+	//	b = append(b, &i)
+	//}
+
+	for _, j := range b {
+		fmt.Print(*j, " ")
+	}
 }

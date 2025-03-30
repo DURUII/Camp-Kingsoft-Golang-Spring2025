@@ -40,23 +40,21 @@ func TestRefArray(t *testing.T) {
 }
 
 func TestArrayForRangeBug(t *testing.T) {
-	a := []int{1, 2, 3}
-	b := []*int{}
-	// 注意，遍历过程没有返回集合中的实际元素
-	// 而是复制在了一个“固定”的变量（值传递），例如 i
-	// *复制操作可能会存在性能问题
-	for _, i := range a {
-		b = append(b, &i)
-	}
-	// 相当于
-	//var i int
-	//for k := 0; k < len(a); k++ {
-	//	i = a[k]
-	//	b = append(b, &i)
-	//}
+	var a = [5]int{1, 2, 3, 4, 5}
+	var r [5]int
 
-	for _, j := range b {
-		fmt.Print(*j, " ")
+	fmt.Println("original a =", a)
+
+	// a[:] ?
+	for i, v := range a {
+		if i == 0 {
+			a[1] = 12
+			a[2] = 13
+		}
+		// 遍历的 a 其实是原数组的拷贝副本，不是引用
+		r[i] = v
 	}
 
+	fmt.Println("after for range loop, r =", r)
+	fmt.Println("after for range loop, a =", a)
 }

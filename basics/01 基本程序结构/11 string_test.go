@@ -10,6 +10,7 @@ import (
 func TestStringDefaultValue(t *testing.T) {
 	// 字符串是原生数值类型，的默认值是""，而不是 None/nil
 	var str string
+	// 获取 Go 字符串长度操作的时间复杂度是 O(1)
 	t.Log("*"+str+"*", len(str))
 }
 

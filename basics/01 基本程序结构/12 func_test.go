@@ -92,11 +92,25 @@ func TestDeferModifiesReturn(t *testing.T) {
 func GetFn() func() {
 	fmt.Print("[outside]")
 	return func() {
-		fmt.Print("[Inside]")
+		fmt.Print("[inside]")
 	}
 }
 
 func TestDeferWithFunctionCall(t *testing.T) {
+	// 先执行 GetFn()，打印 [outside]
+	// 返回打印 [inside] 的函数，延迟执行
+	// 打印 [here]，打印 [inside]
 	defer GetFn()()
 	fmt.Print("[here]")
+}
+
+func TestBlockSpace(t *testing.T) {
+	x := 11
+	fmt.Println(x)
+	{
+		fmt.Println(x)
+		x := 12
+		fmt.Println(x)
+	}
+	fmt.Println(x)
 }
