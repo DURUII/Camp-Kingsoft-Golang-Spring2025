@@ -7,12 +7,15 @@ import (
 	"time"
 )
 
+// 自定义类型，让程序简单可读
+type IntConv func(int) int
+
 func cubic(x int) int {
 	time.Sleep(time.Millisecond * time.Duration(rand.Intn(1000)))
 	return x * x * x
 }
 
-func timeit(inner func(int) int) func(int) int {
+func timeit(inner IntConv) IntConv {
 	// 装饰器
 	return func(x int) int {
 		tic := time.Now()
@@ -106,11 +109,11 @@ func TestDeferWithFunctionCall(t *testing.T) {
 
 func TestBlockSpace(t *testing.T) {
 	x := 11
-	fmt.Println(x)
+	fmt.Println(x) // 11
 	{
-		fmt.Println(x)
+		fmt.Println(x) // 11
 		x := 12
-		fmt.Println(x)
+		fmt.Println(x) // 12
 	}
-	fmt.Println(x)
+	fmt.Println(x) // 11
 }

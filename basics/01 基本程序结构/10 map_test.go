@@ -66,7 +66,7 @@ func TestMapOperation(t *testing.T) {
 
 	// 删除元素
 	delete(m1, 4)
-	delete(m1, 100) // 执行也不会失败，不会抛出运行时的异常
+	delete(m1, 100) // 执行不会失败，不会抛出运行时的异常
 	t.Log(len(m1))
 }
 

@@ -11,17 +11,18 @@ Go 的文件命名规则是用全小写字母形式的短小单词命名，
 下划线在 Go 语言中特殊作用，如_test表示测试代码。
 */
 
+// 测试
 func TestFibonacciSeries(t *testing.T) {
 	// 类型关键字在后面（一般用于变量声明，主要是全局/外部）
 	// 静态类型（与 Python/JavaScript 不同）
-	//var a int = 1
-	//var b int = 1
+	// var a int = 1
+	// var b int = 1
 
 	// 虽然是静态类型，但具有自动类型推断* （与 Java 不同）
-	//var (
+	// var (
 	//	a = 1
 	//	b = 1
-	//)
+	// )
 
 	// 短声明，支持多个变量赋值* （与 Python 相同）
 	a, b := 1, 1
