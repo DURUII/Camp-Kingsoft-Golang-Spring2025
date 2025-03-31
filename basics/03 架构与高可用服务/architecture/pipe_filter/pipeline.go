@@ -1,8 +1,8 @@
-package pipefilter
+package pipe_filter
 
 type StraightPipeline struct {
 	Name    string
-	Filters *[]Filter
+	Filters *[]Filter // 组合模式
 }
 
 func NewStraightPipeline(name string, filters ...Filter) *StraightPipeline {

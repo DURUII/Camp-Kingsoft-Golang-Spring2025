@@ -1,4 +1,4 @@
-package pipefilter
+package pipe_filter
 
 import (
 	"errors"

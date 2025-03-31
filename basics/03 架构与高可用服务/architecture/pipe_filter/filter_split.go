@@ -1,4 +1,4 @@
-package pipefilter
+package pipe_filter
 
 import (
 	"errors"
@@ -17,6 +17,7 @@ func NewSplitFilter(delimiter string) *SplitFilter {
 
 func (sf *SplitFilter) Process(r Request) (Response, error) {
 	str, ok := r.(string)
+	// Let it crash 原则
 	if !ok {
 		return nil, SplitFilterWrongFormatError
 	}
