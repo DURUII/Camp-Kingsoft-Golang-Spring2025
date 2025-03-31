@@ -1,4 +1,4 @@
-package ch02
+package abstract
 
 import (
 	"fmt"
@@ -28,8 +28,7 @@ func (e *Employee) String() string {
 // Go 语言不支持继承
 func TestCreateData(t *testing.T) {
 	e := Employee{"1", "Jack", 20}
-	// 返回指针类型
-	e2 := new(Employee)
+	e2 := new(Employee) // 返回指针类型
 	e2.Id = "123"
 	e2.Name = "Tom"
 	e2.Age = 30
@@ -39,6 +38,8 @@ func TestCreateData(t *testing.T) {
 	// 不需要箭头符号（与 C 不同）
 	t.Log(e2.String())
 	fmt.Println("Address = ", unsafe.Pointer(&e2.Name))
+	// 如果结构体的所有成员变量都是可比较的，那么结构体就可比较
+	fmt.Println(*e2 == e)
 }
 
 // 变量的内存地址值必须是其类型本身大小的整数倍
@@ -61,7 +62,7 @@ type S struct {
 
 func TestStructSize(t *testing.T) {
 	var q Q
-	println(unsafe.Sizeof(q)) // 24
+	fmt.Println(unsafe.Sizeof(q)) // 24
 	var s S
-	println(unsafe.Sizeof(s)) // 16
+	fmt.Println(unsafe.Sizeof(s)) // 16
 }

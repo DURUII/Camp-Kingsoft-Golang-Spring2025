@@ -1,4 +1,4 @@
-package ch02
+package error
 
 import (
 	"errors"
@@ -9,7 +9,7 @@ import (
 // 一般预置错误，为了后续区分错误类型
 var TooSmallError = errors.New("n must be no less than than 2")
 
-// 我们改造 GetFibonacciList 函数，支持错误校验
+// 我们改造 GetFibonacciList 函数，支持错误校验 (error 是个接口)
 func GetFibonacciList(n int) ([]int, error) {
 	if n < 2 {
 		return nil, TooSmallError
