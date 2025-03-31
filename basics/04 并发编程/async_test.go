@@ -1,4 +1,4 @@
-package concurrency
+package ch04
 
 import (
 	"fmt"
