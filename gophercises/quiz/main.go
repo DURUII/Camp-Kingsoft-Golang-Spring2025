@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"flag"
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
 	"time"
@@ -14,7 +15,7 @@ import (
 func main() {
 	// terminal setup
 	csvFileNamePtr := flag.String("csv", "problems.csv", "a csv file in the format of 'question,answer'")
-	timeLimit := flag.Int("limit", 15, "the time limit for the quiz in seconds")
+	timeLimit := flag.Int("limit", 10, "the time limit for the quiz in seconds")
 	flag.Parse()
 	// read the file
 	file, err := os.Open(*csvFileNamePtr)
@@ -29,10 +30,10 @@ func main() {
 	}
 	// => struct problem [decouple from how they came into our program]
 	problems := parseLines(lines)
+	rand.Shuffle(len(problems), func(i, j int) { problems[i], problems[j] = problems[j], problems[i] })
 
 	timer := time.NewTimer(time.Duration(*timeLimit) * time.Second)
 	// if you call `<-timer.C` here, the code would be blocked here
-
 	// keep track of score
 	correct := 0
 	for i, p := range problems {
