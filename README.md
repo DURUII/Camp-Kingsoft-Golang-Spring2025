@@ -35,5 +35,6 @@
 
 ## 优质在线资源
 
+- The Uber Go Style Guide：https://github.com/uber-go/guide/blob/master/style.md
 - 深入理解Go并发编程：https://github.com/smallnest/concurrency-programming-via-go-code
 - Go语言从入门到实战：https://gitee.com/geektime-geekbang/go_learning
