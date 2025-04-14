@@ -19,7 +19,7 @@
 - 基于 Golang 和 Bubbletea 实现的现代终端 UI 猜数字游戏，采用 Elm 架构（MVU 模型）实现交互逻辑与视图分离，明确状态机跳转，视图更新由数据驱动。
 - 支持实时输入合法性校验、交互式反馈等功能，具备状态管理与用户操作追踪。
 
-![](./proj/numguess/assets/demo.gif)
+<img src="./proj/numguess/assets/demo.gif" style="width:50%;"/>
 
 2. 🧩简易 JSON 词汇数据写入 SQLite3 系统
 
