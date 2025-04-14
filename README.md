@@ -14,14 +14,14 @@
 
 ## 作业简介
 
-1. 🎮简易数字猜谜游戏 [[README]](./proj/guess_number/README.md)
+1. 🎮 简易数字猜谜游戏 [[README]](./proj/guess_number/README.md)
 
 - 基于 Golang 和 Bubbletea 实现的现代终端 UI 猜数字游戏，采用 Elm 架构（MVU 模型）实现交互逻辑与视图分离，明确状态机跳转，视图更新由数据驱动。
 - 支持实时输入合法性校验、交互式反馈等功能，具备状态管理与用户操作追踪。
 
 <img src="./proj/numguess/assets/demo.gif" style="width:50%;"/>
 
-2. 🧩简易 JSON 词汇数据写入 SQLite3 系统
+2. 🧩 简易 JSON 词汇数据写入 SQLite3 系统
 
 - 设计并实现一个高性能、可扩展的数据导入方案，将结构化 JSON 词汇数据解析后存入 SQLite，为后续词汇学习系统提供数据支持。
 - 技术亮点：
