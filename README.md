@@ -21,9 +21,9 @@
 
 <img src="./proj/numguess/assets/demo.gif" style="width:50%;"/>
 
-2. 🧩 简易 JSON 词汇数据写入 SQLite3 系统
+2. 🧩 简易 JSON 词汇数据解析并写入 SQLite
 
-- 设计并实现一个高性能、可扩展的数据导入方案，将结构化 JSON 词汇数据解析后存入 SQLite，为后续词汇学习系统提供数据支持。
+- 设计并实现一个高性能、可扩展的数据导入方案，将结构化 JSON 词汇数据解析后存入 SQLite，数据来源于开源项目[english-vocabulary](https://github.com/KyleBing/english-vocabulary/)。
 - 技术亮点：
     - **数据表建模**
       ：将词汇、翻译、短语抽象为独立表，参考[阿里云数据设计规范](https://developer.aliyun.com/article/709387)，支持软删除与多来源管理。
