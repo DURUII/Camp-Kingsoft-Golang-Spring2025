@@ -46,10 +46,11 @@ loop:
 		switch sl[i] % 2 {
 		case 0:
 			firstEven = sl[i]
-			break loop //
+			break loop
 		case 1:
 			// do nothing
 		}
 	}
+
 	println(firstEven) // 6
 }

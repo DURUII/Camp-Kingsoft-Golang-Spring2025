@@ -1,4 +1,4 @@
-package ch04
+package _chan
 
 import (
 	"fmt"
@@ -12,7 +12,9 @@ func dataProducer(ch chan int, wg *sync.WaitGroup) {
 		for i := 0; i < 10; i++ {
 			ch <- i
 		}
-		close(ch) // 关闭通道，否则两个消费者都会死等数据，避免 dead lock
+		// 关闭通道，否则两个消费者都会死等数据，避免 dead lock
+		// 向关闭的 channel 发送数据，会导致 panic
+		close(ch)
 		wg.Done()
 	}()
 }
@@ -21,6 +23,7 @@ func dataProducer(ch chan int, wg *sync.WaitGroup) {
 func dataReceiver(ch chan int, wg *sync.WaitGroup) {
 	go func() {
 		for {
+			// ok 用于退出信号的广播机制
 			if data, ok := <-ch; ok {
 				fmt.Println(data)
 			} else {

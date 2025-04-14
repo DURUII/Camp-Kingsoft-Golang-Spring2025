@@ -48,7 +48,7 @@ func TestMapBasedSet(t *testing.T) {
 	}
 	```*/
 
-	// 当 key 不存在时，默认返回零值*
+	// 当 key 不存在时，默认返回零值（与 Python/Java 不同）
 	// 所以我们无法通过 val 判断出，究竟是因为 key 不存在返回的零值，
 	// 还是因为 key 本身对应的 value 就是 0
 	if val, ok := m1[3]; ok { // “comma ok”的惯用法，这类似 Python 中 map.get(key, default)，而 default 系统自动返回
@@ -72,6 +72,7 @@ func TestMapOperation(t *testing.T) {
 
 func TestMapIterationOrder(t *testing.T) {
 	// 注意，map 输出次序是有意而为地随机化的，用于防止程序员偷懒
+	// *判断 map 中是否存在某个值，需要遍历 map
 	m := map[int]int{1: 1, 2: 4, 3: 9, 4: 16}
 	for k := 0; k < 10; k++ {
 		// 也可以写成 key, _ := range m

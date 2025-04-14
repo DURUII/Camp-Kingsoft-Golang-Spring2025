@@ -17,6 +17,7 @@ func TestArray(t *testing.T) {
 	// 稀疏数组初始化
 	c := [10]int{
 		2: 99,
+		3,
 	}
 	t.Log(c)
 

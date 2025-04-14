@@ -1,4 +1,4 @@
-package ch04
+package cache
 
 import (
 	"fmt"
@@ -19,7 +19,7 @@ func TestSyncPool(t *testing.T) {
 	pool.Put(3)
 
 	// 第一个 Get取出的是私有池中的，私有池仅可放一个对象
-	//后面的Get取出的则是共享池中的，而共享池的是后进先出的。
+	// 后面的Get取出的则是共享池中的，而共享池的是后进先出的。
 	t.Log(pool.Get().(int))
 	t.Log(pool.Get().(int))
 	t.Log(pool.Get().(int))

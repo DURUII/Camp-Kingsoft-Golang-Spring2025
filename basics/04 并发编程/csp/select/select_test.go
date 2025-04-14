@@ -1,4 +1,4 @@
-package ch04
+package _select
 
 import (
 	"fmt"
@@ -7,7 +7,8 @@ import (
 )
 
 func service() string {
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(50 * time.Millisecond)
+	//time.Sleep(500 * time.Millisecond)
 	return "done"
 }
 
@@ -29,7 +30,6 @@ func TestAsync(t *testing.T) {
 	case ret := <-AsyncService():
 		t.Log(ret)
 	case <-time.After(500 * time.Millisecond):
-		t.Log("timeout")
+		t.Error("timeout")
 	}
-
 }

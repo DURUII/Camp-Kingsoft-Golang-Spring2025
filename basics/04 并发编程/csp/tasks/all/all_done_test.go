@@ -1,4 +1,4 @@
-package ch04
+package all
 
 import (
 	"fmt"
@@ -14,10 +14,7 @@ func runTask(id int) string {
 
 func AllResponse() string {
 	numOfRunner := 10
-	// 协程阻塞泄漏，可能导致资源耗尽
-	// ch := make(chan string)
-	// 采用 buffered channel 将 发送/接受 解耦
-	ch := make(chan string, 1)
+	ch := make(chan string, numOfRunner)
 	for i := 0; i < numOfRunner; i++ {
 		go func(i int) {
 			ret := runTask(i)
@@ -25,9 +22,10 @@ func AllResponse() string {
 		}(i)
 	}
 
+	// 等所有结果返回
 	finalRet := ""
 	for j := 0; j < numOfRunner; j++ {
-		// aggregation
+		// unordered aggregation
 		finalRet += <-ch + "\n"
 	}
 	return finalRet
@@ -37,5 +35,5 @@ func TestAllResponse(t *testing.T) {
 	t.Log("Before: ", runtime.NumGoroutine())
 	t.Log(AllResponse())
 	time.Sleep(2 * time.Second)
-	t.Log("Before: ", runtime.NumGoroutine())
+	t.Log("After: ", runtime.NumGoroutine())
 }

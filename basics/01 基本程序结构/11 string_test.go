@@ -5,12 +5,14 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"unicode/utf8"
 )
 
 func TestStringDefaultValue(t *testing.T) {
 	// 字符串是原生数值类型，的默认值是""，而不是 None/nil
 	var str string
 	// 获取 Go 字符串长度操作的时间复杂度是 O(1)
+	// string 只能和 string 做拼接，Go 不会做类型转换（如自动加上 .toString()）
 	t.Log("*"+str+"*", len(str))
 }
 
@@ -60,9 +62,11 @@ func TestStringImmutability(t *testing.T) {
 }
 
 func TestUnicodeIteration(t *testing.T) {
-	s := "hello, 中国🀄️!"
-	// Go 语言中的字符串值是一个可空的字节序列，也是一个可空的字符序列
-	// rune 这个类型来表示一个 Unicode 码点，一个 rune 实例就是一个 Unicode 字符
+	s := "hello, 中国🀄!"
+	// *Go 语言中的字符串值是一个可空的字节序列，也是一个可空的字符序列
+	// rune 这个类型本质上是 int32，表示一个 Unicode 码点，一个 rune 实例就是一个 Unicode 字符
+	fmt.Println(len(s), utf8.RuneCountInString(s))
+
 	for _, c := range s {
 		t.Logf("%[1]c %[1]d", c)
 	}
@@ -72,6 +76,7 @@ func TestStringPkg(t *testing.T) {
 	s := "A,B,C"
 	parts := strings.Split(s, ",")
 	t.Log(strings.Join(parts, "->"))
+	t.Log(strings.ContainsRune(s, ','))
 	// 拼写历史来由：Integer to ASCII
 	s = strconv.Itoa(10)
 	t.Log(string('*') + s + "*") // 注意强制类型转换

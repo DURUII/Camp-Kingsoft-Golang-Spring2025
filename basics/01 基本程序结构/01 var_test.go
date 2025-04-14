@@ -50,6 +50,10 @@ func TestExchangeNum(t *testing.T) {
 }
 
 func TestKeywords(t *testing.T) {
+	// 指针、接口、切片、channel、map 和函数的默认值为 nil
+	var intFunc func(int) int
+	fmt.Println(intFunc == nil)
+
 	// 问：nil 是不是关键字？答：不是，在作用域内可被重定义。
 	var a [3]int
 	var b []int
@@ -57,7 +61,7 @@ func TestKeywords(t *testing.T) {
 	fmt.Println(reflect.TypeOf(a), "a=", a)
 	// 切片的初始值为 nil
 	fmt.Println(reflect.TypeOf(b), "b=", b, b == nil)
-	// nil 不是 25 个关键字之一，因为可以被覆盖作为变量名 (不推荐)
+	// nil 不是 25 个关键字之一，因为可以被覆盖作为变量名 (不要在实际代码中使用)
 	// shadows declaration at builtin.go
 	nil := []int{1, 2, 3}
 	// append 要赋值给新的变量

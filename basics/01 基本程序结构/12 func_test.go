@@ -16,7 +16,7 @@ func cubic(x int) int {
 }
 
 func timeit(inner IntConv) IntConv {
-	// 装饰器
+	// 装饰器，函数作为返回值一般在闭包和构建功能中间件时使用得比较多
 	return func(x int) int {
 		tic := time.Now()
 		ret := inner(x)
@@ -54,7 +54,7 @@ func TestVariadicArguments(t *testing.T) {
 
 func TestDeferWithPanic(t *testing.T) {
 	// 函数（异常）返回前，类似于 Java 的 finally
-	// 通常用于（安全地）释放资源
+	// 通常用于（安全地）释放资源，LIFO 执行顺序
 	defer func() {
 		fmt.Println("Clear resources")
 	}()

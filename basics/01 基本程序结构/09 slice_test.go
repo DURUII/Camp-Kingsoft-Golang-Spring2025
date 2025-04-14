@@ -2,6 +2,7 @@ package ch01
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -18,12 +19,13 @@ func TestSliceCap(t *testing.T) {
 	var s0 []int
 	t.Log(len(s0), cap(s0))
 	// 切片有len/cap，用 make 指定容量，避免扩容复制*
+	// *这里代表，有 3 个 0 元素，容量为 4
 	var s1 = make([]int, 3, 4)
 	// 当存储空间不足，自动开辟新的存储空间，并拷贝原有数值
+	// 在循环操作中频繁 append 自动扩容会放大性能损失，减慢程序的运行
 	s1 = append(s1, 10)
 	t.Log(s1, len(s1), cap(s1))
 	s1 = append(s1, 40)
-	// 容量成倍增长
 	t.Log(s1, len(s1), cap(s1))
 }
 
@@ -50,6 +52,21 @@ func TestSliceSharedMem(t *testing.T) {
 	t.Log(year, Q2, summer)
 }
 
+func TestSliceSharedMem2(t *testing.T) {
+	transform := func(arr []int) {
+		for i := 0; i < len(arr); i++ {
+			arr[i] = arr[i] * 2
+		}
+	}
+
+	nums := [...]int{1, 2, 3, 4, 5}
+	transform(nums[:])
+	fmt.Println(nums)
+	assert.Equal(t, nums, [...]int{2, 4, 6, 8, 10})
+}
+
+// *Fix for-range Issue Again in Go 1.22
+// 要复现这个错误，需要在 go.mod 文件中设置 go 1.24
 func TestSliceForRangeBug(t *testing.T) {
 	a := []int{1, 2, 3}
 	b := []*int{}

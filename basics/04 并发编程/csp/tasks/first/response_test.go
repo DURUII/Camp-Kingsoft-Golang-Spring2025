@@ -1,4 +1,4 @@
-package ch04
+package first
 
 import (
 	"fmt"
@@ -16,8 +16,8 @@ func FirstResponse() string {
 	numOfRunner := 10
 	// 存在协程泄漏，可能导致资源耗尽
 	// ch := make(chan string)
-	// 采用 buffered channel 将 发送/接受 解耦
-	ch := make(chan string, 1)
+	// 采用 buffered channel 将 发送/接受 解耦，防止协程泄漏
+	ch := make(chan string, numOfRunner)
 	for i := 0; i < numOfRunner; i++ {
 		go func(i int) {
 			ret := runTask(i)
@@ -32,5 +32,5 @@ func TestFirstResponse(t *testing.T) {
 	t.Log("Before: ", runtime.NumGoroutine())
 	t.Log(FirstResponse())
 	time.Sleep(1 * time.Second)
-	t.Log("Before: ", runtime.NumGoroutine())
+	t.Log("After: ", runtime.NumGoroutine())
 }

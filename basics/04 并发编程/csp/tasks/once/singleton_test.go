@@ -1,4 +1,4 @@
-package ch04
+package once
 
 import (
 	"fmt"
@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-// 单例模式（懒汉式，线程安全）
 type Object struct {
 	id int
 }
@@ -14,6 +13,7 @@ type Object struct {
 var singleInstance *Object
 var once sync.Once
 
+// 单例模式（懒汉式，线程安全）
 func GetSingletonObject() *Object {
 	//fmt.Println("Create Object")
 	//singleInstance = new(Object)

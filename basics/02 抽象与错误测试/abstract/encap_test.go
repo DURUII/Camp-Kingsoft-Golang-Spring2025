@@ -18,7 +18,7 @@ type Employee struct {
 }
 
 // 对行为的定义，不写在 struct 里，不是典型的 OOP
-// 避免内存分配与复制
+// 指针接收器，避免内存分配与复制；结构体接收器，无法修改对应原对象字段
 func (e *Employee) String() string {
 	// 没有对象复制产生
 	fmt.Println("Address = ", unsafe.Pointer(&e.Name))
@@ -65,4 +65,6 @@ func TestStructSize(t *testing.T) {
 	fmt.Println(unsafe.Sizeof(q)) // 24
 	var s S
 	fmt.Println(unsafe.Sizeof(s)) // 16
+	// 没有构造析构函数的概念，所以所有字段都是对应的零值
+	fmt.Println(s, q)
 }

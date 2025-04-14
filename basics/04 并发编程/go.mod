@@ -1,4 +1,4 @@
-module example.com/ch01
+module concurrency
 
 go 1.24
 

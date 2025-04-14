@@ -1,4 +1,4 @@
-package ch04
+package pool
 
 import (
 	"errors"
