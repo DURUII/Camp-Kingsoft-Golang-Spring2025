@@ -1,0 +1,3 @@
+- 所有的结构体方法都采用指针接收器。
+- 出借和归还应当返回 error 或者 bool 类型。
+- 出于安全的考量，ListAllAvailableBooks/ListAllBorrowedBooks 方法返回副本，无法原地修改。

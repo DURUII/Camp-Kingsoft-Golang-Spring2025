@@ -1,0 +1,5 @@
+2024-03-20 10:15:30,user001,login,success
+2024-03-20 10:15:45,user002,view,product123
+2024-03-20 10:15:50,user003,login,success
+2024-03-20 10:16:10,user001,view,product456
+2024-03-20 10:16:30,user002,logout,success
