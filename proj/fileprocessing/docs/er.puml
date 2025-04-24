@@ -1,0 +1,41 @@
+@startuml
+
+skinparam dpi 500
+
+entity Word {
+    * ID : uint
+    --
+    SrcID : uint
+    Word : text
+    IsDelete : int
+}
+
+entity Translation {
+    * ID : uint
+    --
+    WordID : uint
+    Translation : text
+    Type : text
+    IsDelete : int
+}
+
+entity Source {
+    * ID : uint
+    --
+    SrcName : text
+}
+
+entity Phrase {
+    * ID : uint
+    --
+    WordID : uint
+    Phrase : text
+    Translation : text
+    IsDelete : int
+}
+
+Word ||--o{ Translation : "has"
+Word ||--o{ Phrase : "has"
+Word }o--|| Source : "comes from"
+
+@enduml
