@@ -33,6 +33,17 @@
     - **写入性能调优**：采用批量插入、事务控制、WAL模式、关闭 GORM 日志与默认事务，SQLite 写入性能提升数量级。优化后导入
       CET4 + CET6 总数据耗时降至 **500ms**（原始实现单个文件 30s），性能提升数量级。
 
+3. 🤖 基于 LLM 的编程考核题生成服务
+
+- 设计并实现了一个基于 Golang 的编程题生成服务，支持动态生成多种类型的编程题：支持灵活但可控的的参数配置、支持多模型切换（如通义、deepseek）以及清晰的格式输出（JSON）。
+- 技术亮点
+    - 采用分层架构（接入层、服务层、适配层、数据操作层）提高可维护性与扩展性；实现了通用接口抽象，支持多种第三方服务接入，增强了代码复用性。
+    - 迭代优化提示词，缓解提示词注入问题（如下图），了大语言模型返回内容不可控问题。
+
+<div align="center">
+<img src="./proj/ai-question-generator/doc/img.png" style="width:50%;"/>
+</div>
+
 ## 优质在线资源
 
 - The Uber Go Style Guide：https://github.com/uber-go/guide/blob/master/style.md

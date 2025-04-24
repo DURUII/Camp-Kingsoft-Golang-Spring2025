@@ -12,6 +12,10 @@ DASHSCOPE_API_KEY=<your_api_key>
 go run main.go
 ```
 
+然后，向该接口发送请求，你可以使用 Postman 或者 curl 等工具。
+
+![img.png](./doc/postman.png)
+
 # 架构设计
 
 - 接入层：提供 HTTP 接口，接收用户请求并进行参数校验。
