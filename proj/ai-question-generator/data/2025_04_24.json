@@ -1,0 +1,110 @@
+[
+  {
+    "aiCostTime": 4.648808209,
+    "aiEndTime": "2025-04-24 11:51:34",
+    "aiReq": {
+      "keyword": "Gin",
+      "language": "go",
+      "model": "",
+      "type": 1
+    },
+    "aiRes": {
+      "aiRes": {
+        "answers": [
+          "c.SetHeader(\"Content-Type\", \"application/json\")",
+          "c.Writer.Header().Set(\"Content-Type\", \"application/json\")",
+          "c.Header(\"Content-Type\", \"application/json\")",
+          "c.Response.SetHeader(\"Content-Type\", \"application/json\")"
+        ],
+        "right": [
+          2
+        ],
+        "title": "在 Gin 框架中，下面哪种方式是正确的设置响应头的方法？"
+      },
+      "code": 0,
+      "msg": "success"
+    },
+    "aiStartTime": "2025-04-24 11:51:30"
+  },
+  {
+    "aiCostTime": 4.229543375,
+    "aiEndTime": "2025-04-24 11:51:40",
+    "aiReq": {
+      "keyword": "Gin",
+      "language": "go",
+      "model": "",
+      "type": 1
+    },
+    "aiRes": {
+      "aiRes": {
+        "answers": [
+          "ctx.SetHeader(\"Content-Type\", \"application/json\")",
+          "ctx.Header(\"Content-Type\", \"application/json\")",
+          "ctx.Writer.Header(\"Content-Type\", \"application/json\")",
+          "ctx.Response.SetHeader(\"Content-Type\", \"application/json\")"
+        ],
+        "right": [
+          1
+        ],
+        "title": "在 Gin 框架中，以下哪种方式是正确设置响应头的方法？"
+      },
+      "code": 0,
+      "msg": "success"
+    },
+    "aiStartTime": "2025-04-24 11:51:36"
+  },
+  {
+    "aiCostTime": 5.887641,
+    "aiEndTime": "2025-04-24 15:54:42",
+    "aiReq": {
+      "keyword": "Gin",
+      "language": "go",
+      "model": "tongyi",
+      "type": 1
+    },
+    "aiRes": {
+      "aiRes": {
+        "answers": [
+          "c.JSON(200, {\"key\": \"value\"})",
+          "c.JSON(http.StatusOK, gin.H{\"key\": \"value\"})",
+          "c.JSON(200, gin.H{\"key\": \"value\"})",
+          "c.JSON(http.StatusOK, map[string]interface{}{\"key\": \"value\"})"
+        ],
+        "right": [
+          1
+        ],
+        "title": "在使用 Gin 框架时，下面哪种方式是正确设置响应 JSON 的方法？"
+      },
+      "code": 0,
+      "msg": "success"
+    },
+    "aiStartTime": "2025-04-24 15:54:37"
+  },
+  {
+    "aiStartTime": "2025-04-24 15:54:48",
+    "aiEndTime": "2025-04-24 15:54:51",
+    "aiCostTime": 3.477070542,
+    "aiReq": {
+      "model": "tongyi",
+      "language": "go",
+      "type": 1,
+      "keyword": "Gin"
+    },
+    "aiRes": {
+      "code": 0,
+      "msg": "success",
+      "aiRes": {
+        "title": "在使用 Gin 框架时，以下哪种方式是正确设置响应 JSON 数据的方法？",
+        "answers": [
+          "c.JSON(200, map[string]string{\"message\": \"ok\"})",
+          "c.JSON(map[string]string{\"message\": \"ok\"})",
+          "c.JSON(http.StatusOK, {\"message\": \"ok\"})",
+          "c.JSON(http.StatusOK, gin.H{\"message\": \"ok\"})"
+        ],
+        "right": [
+          3
+        ]
+      }
+    }
+  }
+]
