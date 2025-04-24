@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.title}}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f7f8fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-size: 16px;
+            color: #555;
+        }
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+        .button {
+            display: inline-block;
+            background-color: #007aff;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-align: center;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #005bb5;
+        }
+        .history-list,
+        .file-list {
+            margin-top: 30px;
+            padding: 0;
+            list-style: none;
+        }
+        .history-list li,
+        .file-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .history-list a,
+        .file-list a {
+            color: #007aff;
+            text-decoration: none;
+        }
+        .history-list a:hover,
+        .file-list a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>{{.title}}</h1>
+
+    <!-- File Upload Section -->
+    <div class="form-group">
+        <label for="file-upload">选择文件上传：</label>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="files" id="file-upload" multiple />
+            <button type="submit" class="button">上传文件</button>
+        </form>
+    </div>
+
+    <!-- File List Section -->
+    <div class="file-list">
+        <h2>文件列表</h2>
+        <ul id="file-list">
+            <!-- Uploaded files will be listed here -->
+        </ul>
+    </div>
+
+    <!-- Download Section -->
+    <div class="form-group">
+        <label for="file-uuid">输入文件 UUID 进行下载：</label>
+        <input type="text" id="file-uuid" placeholder="请输入文件 UUID" />
+        <button class="button" id="download-btn">下载文件</button>
+    </div>
+</div>
+
+<script>
+    // Fetch and display file list
+    fetch("/list?page_num=1&page_size=10")
+        .then((response) => response.json())
+        .then((data) => {
+            const fileList = document.getElementById("file-list");
+            // Ensure that data.data is valid and contains file objects
+            if (data && data.data && Array.isArray(data.data)) {
+                data.data.forEach((file) => {
+                    const listItem = document.createElement("li");
+                    const downloadLink = document.createElement("a");
+                    downloadLink.href = "/download?uuid=" + file.UUID; // Use the correct field name for UUID
+                    downloadLink.textContent = file.FilePath + " (UUID: " + file.UUID + ", Size: " + file.FileSize + " bytes)";
+                    listItem.appendChild(downloadLink);
+                    fileList.appendChild(listItem);
+                });
+            } else {
+                console.error("Invalid data format:", data);
+            }
+        })
+        .catch((error) => console.error("Error fetching file list:", error));
+</script>
+
+</body>
+</html>
