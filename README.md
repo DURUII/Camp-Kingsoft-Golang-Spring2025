@@ -23,7 +23,7 @@
 <img src="./proj/numguess/assets/demo.gif" style="width:50%;"/>
 </div>
 
-2. 🧩 简易 JSON 词汇数据解析并写入 SQLite
+2. 🧩 简易 JSON 词汇数据解析并写入 SQLite [[README]](./proj/fileprocessing/README.md)
 
 - 设计并实现一个高性能、可扩展的数据导入方案，将结构化 JSON 词汇数据解析后存入
   SQLite，数据来源于开源项目[english-vocabulary](https://github.com/KyleBing/english-vocabulary/)。
@@ -33,7 +33,7 @@
     - **写入性能调优**：采用批量插入、事务控制、WAL模式、关闭 GORM 日志与默认事务，SQLite 写入性能提升数量级。优化后导入
       CET4 + CET6 总数据耗时降至 **500ms**（原始实现单个文件 30s），性能提升数量级。
 
-3. 🤖 基于 LLM 的编程考核题生成服务
+3. 🤖 基于 LLM 的编程考核题生成服务 [[README]](./proj/ai-question-generator/README.md)
 
 - 设计并实现了一个基于 Golang 的编程题生成服务，支持动态生成多种类型的编程题：支持灵活但可控的的参数配置、支持多模型切换（如通义、deepseek）以及清晰的格式输出（JSON）。
 - 技术亮点
