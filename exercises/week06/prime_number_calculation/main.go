@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"sync"
@@ -66,6 +67,9 @@ func worker() {
 
 // 更新数表
 func run(start, end int) {
+	if start > end {
+		return
+	}
 	// 启动消费者
 	wg.Add(end - start + 1)
 	for i := 0; i < numWorker; i++ {
@@ -74,7 +78,6 @@ func run(start, end int) {
 	go producer(start, end)
 	wg.Wait()
 	close(jobFinishMsg)
-
 }
 
 func main() {
@@ -82,19 +85,18 @@ func main() {
 		start, _ = strconv.Atoi(os.Args[1])
 		end, _ = strconv.Atoi(os.Args[2])
 	} else {
-		panic("usage: prime_number_calculation <start> <end>")
+		log.Fatal("usage: prime_number_calculation <start> <end>")
 	}
 	tic := time.Now()
 	run(start, end)
 	count := 0
-	// 计算时间并写入文件，stringBuilder 拼接字符串提速
 	f, err := os.Create(fmt.Sprintf("primes_%d_%d.txt", start, end))
 	if err != nil {
 		panic(err)
 	}
 	defer f.Close()
 	writer := bufio.NewWriter(f)
-	for i := start; i < end; i++ {
+	for i := start; i <= end; i++ {
 		if numTable[i] == 1 {
 			fmt.Fprintln(writer, i)
 			count++
