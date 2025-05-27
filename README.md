@@ -1,8 +1,4 @@
-# Bootcamp-Kingsoft-Server-Spring2025
-
-> 如有任何问题，欢迎提出 Issue 或 PR 以便修正，共同进步！
-
-参与这门训练营配合互联网资源自学，用到的学习记录和作业实现汇总在此仓库。
+# Camp-Kingsoft-Server-Spring2025
 
 - `./basics` 包含 Go 语言的基本语法样例代码，配合详细的注释并与其他主流编程语言进行对比（如
   Python/Java），对避免陷入其他语言思考模式的固有陷阱有很大的帮助，包括：
@@ -11,8 +7,8 @@
     - 🤕 错误处理与测试：单元测试、benchmark、BDD、json 性能调优
     - 🏗️ 架构设计：微内核、管道过滤器
     - ⚡️ 并发编程：mutex、waitgroup、channel 等
-- `./proj` 包含我对训练营入门作业的设计文档和代码实现，考核作业基础需求不提供skeleton_code，有庞大的自我发挥空间。
-- `./exercises` 包含我对训练营中期限时考核的设计文档和代码实现。
+- `./proj` 包含一些设计文档和代码实现。
+- `./exercises` 包含gophercises、Docker等练习。
 
 ## 作业简介
 
@@ -49,5 +45,8 @@
 ## 优质在线资源
 
 - The Uber Go Style Guide：https://github.com/uber-go/guide/blob/master/style.md
-- 深入理解Go并发编程：https://github.com/smallnest/concurrency-programming-via-go-code
 - Go语言从入门到实战：https://gitee.com/geektime-geekbang/go_learning
+- Docker for beginners (Golang): https://docs.docker.com/guides/golang/
+- 深入理解Go并发编程：https://github.com/smallnest/concurrency-programming-via-go-code
+
+<!-- ![](./docs/assets/imgs/Go语言从入门到实战结课证书.png) -->
