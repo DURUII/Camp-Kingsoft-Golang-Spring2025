@@ -49,4 +49,4 @@
 - Docker for beginners (Golang): https://docs.docker.com/guides/golang/
 - 深入理解Go并发编程：https://github.com/smallnest/concurrency-programming-via-go-code
 
-<!-- ![](./docs/assets/imgs/Go语言从入门到实战结课证书.png) -->
+![](./docs/assets/imgs/Go语言从入门到实战结课证书.png)
