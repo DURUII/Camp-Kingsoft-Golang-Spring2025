@@ -1,6 +1,6 @@
 //go:build !race
 
-package _1mutex
+package mutex
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+// 数据不一致问题
 func AsyncCounter(numGoRoutine, numAddition int) int {
 	var count = 0
 	// var mu sync.Mutex // 地道的用法是使用零值
@@ -18,7 +19,7 @@ func AsyncCounter(numGoRoutine, numAddition int) int {
 		go func() {
 			for j := 0; j < numAddition; j++ {
 				// mu.Lock()   // 不支持在锁的情况下再次请求锁
-				count++ // 计数器加 1，这并不是一个原子操作
+				count++ // 计数器加 1 不是一个原子操作
 				// mu.Unlock() // 有加锁，就有释放锁，在函数中可以 Lock 了之后，立刻 defer Unlock
 			}
 			wg.Done()

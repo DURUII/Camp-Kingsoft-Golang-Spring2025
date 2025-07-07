@@ -6,15 +6,15 @@ import (
 	"time"
 )
 
-func service() string {
-	time.Sleep(2 * time.Second)
-	return "done"
-}
-
 func otherTask() {
 	fmt.Println("working on something else")
 	time.Sleep(1 * time.Second)
 	fmt.Println("task finished")
+}
+
+func service() string {
+	time.Sleep(2 * time.Second) // 模拟耗时操作
+	return "done"
 }
 
 // 类似于 Java 中的 FutureTask
@@ -22,7 +22,7 @@ func asyncService() chan string {
 	// channel 确保发送方和接收方在同一时间点同步
 	// 发送操作会阻塞发送方，直到有接收方读取该值
 	// 同样，接收操作也会阻塞，直到有发送方提供值
-	//retChan := make(chan string)
+	// retChan := make(chan string) 
 
 	// buffered channel 需要指定容量，允许发送方和接收方在时间上解耦
 	// 发送操作在通道未满时不会阻塞，只有当缓冲区满时才会阻塞
@@ -39,8 +39,8 @@ func asyncService() chan string {
 
 // 串行
 func TestSync(t *testing.T) {
-	fmt.Println(service()) // 2s
-	otherTask()            // 1s
+	t.Log(service()) // 2s
+	otherTask()      // 1s
 }
 
 // 并发

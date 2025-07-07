@@ -1,8 +1,9 @@
-package cancel
+package _context
 
 import (
 	"context"
 	"fmt"
+	"runtime"
 	"testing"
 	"time"
 )
@@ -22,7 +23,7 @@ func TestCancelByContext(t *testing.T) {
 	// 父节点
 	ctx, cancel := context.WithCancel(context.Background())
 	for i := 0; i < 5; i++ {
-		go func(i int, ctx context.Context) {
+		go func(ctx context.Context, i int) {
 			for {
 				if isCanceledByContext(ctx) {
 					break
@@ -30,9 +31,10 @@ func TestCancelByContext(t *testing.T) {
 				time.Sleep(5 * time.Millisecond)
 			}
 			fmt.Println(i, "is canceled")
-		}(i, ctx)
+		}(ctx, i)
 	}
 	// 广播机制
 	cancel()
 	time.Sleep(time.Second * 1)
+	fmt.Println("now n = ", runtime.NumGoroutine())
 }

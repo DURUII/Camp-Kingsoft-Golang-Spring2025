@@ -1,4 +1,4 @@
-package all
+package first
 
 import (
 	"fmt"
@@ -12,8 +12,12 @@ func runTask(id int) string {
 	return fmt.Sprintf("Result from %d", id)
 }
 
-func AllResponse() string {
+func FirstResponse() string {
 	numOfRunner := 10
+	// 存在协程泄漏，可能导致服务器资源耗尽
+	// ch := make(chan string)
+	
+	// 采用 buffered channel 将 发送/接受 解耦，防止协程泄漏
 	ch := make(chan string, numOfRunner)
 	for i := 0; i < numOfRunner; i++ {
 		go func(i int) {
@@ -21,19 +25,13 @@ func AllResponse() string {
 			ch <- ret
 		}(i)
 	}
-
-	// 等所有结果返回
-	finalRet := ""
-	for j := 0; j < numOfRunner; j++ {
-		// unordered aggregation
-		finalRet += <-ch + "\n"
-	}
-	return finalRet
+	// 当第一个人放消息后，接受者就会被唤醒，代码会直接返回
+	return <-ch
 }
 
-func TestAllResponse(t *testing.T) {
+func TestFirstResponse(t *testing.T) {
 	t.Log("Before: ", runtime.NumGoroutine())
-	t.Log(AllResponse())
-	time.Sleep(2 * time.Second)
+	t.Log(FirstResponse())
+	time.Sleep(1 * time.Second)
 	t.Log("After: ", runtime.NumGoroutine())
 }
