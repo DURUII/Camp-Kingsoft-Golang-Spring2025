@@ -66,7 +66,7 @@ func TestSliceSharedMem2(t *testing.T) {
 }
 
 // *Fix for-range Issue Again in Go 1.22
-// 要复现这个错误，需要在 go.mod 文件中设置 go 1.24
+// 要复现这个错误，需要在 go.mod 文件中设置 go 1.22
 func TestSliceForRangeBug(t *testing.T) {
 	a := []int{1, 2, 3}
 	b := []*int{}
