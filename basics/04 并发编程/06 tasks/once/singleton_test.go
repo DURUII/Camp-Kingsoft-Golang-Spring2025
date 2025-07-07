@@ -10,13 +10,16 @@ type Object struct {
 	id int
 }
 
+// Stringer 接口
+func (o *Object) String() string {
+	return fmt.Sprintf("Object: %p, Object{id: %v}", o, o.id)
+}
+
 var singleInstance *Object
 var once sync.Once
 
 // 单例模式（懒汉式，线程安全）
 func GetSingletonObject() *Object {
-	//fmt.Println("Create Object")
-	//singleInstance = new(Object)
 	once.Do(func() {
 		fmt.Println("Create Object")
 		singleInstance = new(Object)
@@ -30,7 +33,7 @@ func TestSingleton(t *testing.T) {
 		wg.Add(1)
 		go func() {
 			obj := GetSingletonObject()
-			fmt.Printf("Get SingletonObject: %p\n", obj)
+			fmt.Println("Get SingletonObject:", obj)
 			wg.Done()
 		}()
 	}

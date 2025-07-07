@@ -1,8 +1,9 @@
-package first
+package all
 
 import (
 	"fmt"
 	"runtime"
+	"strings"
 	"testing"
 	"time"
 )
@@ -12,11 +13,9 @@ func runTask(id int) string {
 	return fmt.Sprintf("Result from %d", id)
 }
 
-func FirstResponse() string {
+// CSP 模式实现所有任务完成
+func AllResponse() string {
 	numOfRunner := 10
-	// 存在协程泄漏，可能导致资源耗尽
-	// ch := make(chan string)
-	// 采用 buffered channel 将 发送/接受 解耦，防止协程泄漏
 	ch := make(chan string, numOfRunner)
 	for i := 0; i < numOfRunner; i++ {
 		go func(i int) {
@@ -24,13 +23,19 @@ func FirstResponse() string {
 			ch <- ret
 		}(i)
 	}
-	// 当第一个人放消息后，接受者就会被唤醒，代码会直接返回
-	return <-ch
+
+	// 等所有结果返回
+	var sb strings.Builder
+	for j := 0; j < numOfRunner; j++ {
+		// unordered aggregation
+		sb.WriteString(<-ch + "\n")
+	}
+	return sb.String()
 }
 
-func TestFirstResponse(t *testing.T) {
+func TestAllResponse(t *testing.T) {
 	t.Log("Before: ", runtime.NumGoroutine())
-	t.Log(FirstResponse())
-	time.Sleep(1 * time.Second)
+	t.Log(AllResponse())
+	time.Sleep(2 * time.Second)
 	t.Log("After: ", runtime.NumGoroutine())
 }

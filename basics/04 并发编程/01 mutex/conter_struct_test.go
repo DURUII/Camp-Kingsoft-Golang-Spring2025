@@ -1,4 +1,4 @@
-package _1mutex
+package mutex
 
 import (
 	"fmt"

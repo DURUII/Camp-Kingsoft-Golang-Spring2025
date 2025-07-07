@@ -1,4 +1,4 @@
-package _chan
+package _close
 
 import (
 	"fmt"
@@ -7,6 +7,8 @@ import (
 )
 
 // 生产者
+// 矛盾 1：Receiver 不知道 Producer 放多少数据，是否放完
+// 矛盾 2：假如放 -1 作为结束标志，但是 Producer 不知道放几个结束标志（有几个 Receiver，每个 Receiver 都需要一个结束标志）
 func dataProducer(ch chan int, wg *sync.WaitGroup) {
 	go func() {
 		for i := 0; i < 10; i++ {
@@ -27,6 +29,8 @@ func dataReceiver(ch chan int, wg *sync.WaitGroup) {
 			if data, ok := <-ch; ok {
 				fmt.Println(data)
 			} else {
+				// 如果 channel 被关闭，立即返回零值
+				fmt.Println("channel closed, with zero value", data)
 				break
 			}
 		}

@@ -8,7 +8,6 @@ import (
 
 func service() string {
 	time.Sleep(50 * time.Millisecond)
-	//time.Sleep(500 * time.Millisecond)
 	return "done"
 }
 
@@ -25,11 +24,11 @@ func AsyncService() chan string {
 }
 
 func TestAsync(t *testing.T) {
-	// 超时机制：slow response 是比 quick failure 还可怕的错误
 	select {
 	case ret := <-AsyncService():
 		t.Log(ret)
-	case <-time.After(500 * time.Millisecond):
+	// 超时机制：slow response 是比 quick failure 还可怕的错误
+	case <-time.After(100 * time.Millisecond):
 		t.Error("timeout")
 	}
 }
