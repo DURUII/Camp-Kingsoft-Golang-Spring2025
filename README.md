@@ -1,16 +1,15 @@
-# Bootcamp-Geekbang-Golang
+# golang-from-scratch
 
-- `./basics` 包含 Go 语言的基本语法样例代码，配合详细的注释并与其他主流编程语言进行对比（如
-  Python/Java），对避免陷入其他语言思考模式的固有陷阱有很大的帮助，包括：
+- `./basics` 包含 Go 语言的基本语法样例代码，避免陷入其他主流语言思考模式的固有陷阱：
     - ⚙️ 基础结构：常量、变量、条件、循环、字符串、slice、map
     - 🌆 抽象：结构体、接口
     - 🤕 错误处理与测试：单元测试、benchmark、BDD、json 性能调优
     - 🏗️ 架构设计：微内核、管道过滤器
-    - ⚡️ 并发编程：mutex、waitgroup、channel 等
-- `./proj` 包含一些设计文档和代码实现。
-- `./exercises` 包含gophercises、Docker等练习。
+    - ⚡️ 并发基础：mutex、waitgroup、channel 等
+- `./concurrency` 包含 Go 并发专项内容与思考。
+- `./exercises`/`./proj` 包含一些训练营考核作业的设计文档和代码实现。
 
-## 练习
+## 练手小项目
 
 1. 🎮 简易数字猜谜游戏 [[README]](./proj/numguess/README.md)
 
@@ -46,7 +45,9 @@
 
 - The Uber Go Style Guide：https://github.com/uber-go/guide/blob/master/style.md
 - Go语言从入门到实战：https://gitee.com/geektime-geekbang/go_learning
-- Docker for beginners (Golang): https://docs.docker.com/guides/golang/
-- 深入理解Go并发编程：https://github.com/smallnest/concurrency-programming-via-go-code
+- Docker 训练营: https://opencamp.ai/Docker/camp/202501
+- Go并发编程：https://katherine.cox-buday.com/concurrency-in-go/
 
-![](./docs/assets/imgs/Go语言从入门到实战结课证书.png)
+<div align="center">
+<img src="./docs/assets/imgs/Go语言从入门到实战结课证书.png" style="width:50%;"/>
+</div>
