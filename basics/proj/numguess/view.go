@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	NaN            = errors.New("只对数值产生反应，谢谢")
-	OutOfBounds    = errors.New("大胆，警告你踩过界了")
+	ErrNaN         = errors.New("只对数值产生反应，谢谢")
+	ErrOutOfBounds = errors.New("大胆，警告你踩过界了")
 	gap            = "\n"
 	question       = "? "
 	cursor         = "▸ "
