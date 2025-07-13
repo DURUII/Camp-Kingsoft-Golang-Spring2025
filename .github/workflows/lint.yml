@@ -26,5 +26,11 @@ jobs:
         run: |
           find . -name 'go.mod' -exec dirname {} \; | while read dir; do
             echo "Linting $dir"
-            (cd "$dir" && golangci-lint run || exit 1)
+            cd "$dir"
+            if [ -z "$(find . -name '*.go')" ]; then
+              echo "No Go files in $dir, skipping."
+              continue
+            fi
+            golangci-lint run || exit 1
+            cd -
           done
