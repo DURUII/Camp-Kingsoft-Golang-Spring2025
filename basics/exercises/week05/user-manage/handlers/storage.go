@@ -15,18 +15,27 @@ const filePath = "user.json"
 
 func initStorage() {
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		os.Create("user.json")
+		if _, err := os.Create("user.json"); err != nil {
+			panic(err)
+		}
 	}
 	loadFromFile()
 }
 
 func loadFromFile() {
-	data, _ := os.ReadFile(filePath)
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		users = make([]User, 0)
+		return
+	}
 	if len(data) == 0 {
 		users = make([]User, 0)
 		return
 	}
-	_ = json.Unmarshal(data, &users)
+	if err := json.Unmarshal(data, &users); err != nil {
+		users = make([]User, 0)
+		return
+	}
 }
 
 func saveToFile() error {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"file-service/api/web/files"
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
@@ -19,5 +20,7 @@ func main() {
 	r.POST("/upload", files.UploadHandler)    // 上传
 	r.GET("/list", files.ListHandler)         // 历史
 	r.GET("/download", files.DownloadHandler) // 下载
-	r.Run(":8080")
+	if err := r.Run(":8080"); err != nil {
+		panic(err)
+	}
 }

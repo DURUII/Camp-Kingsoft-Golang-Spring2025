@@ -33,10 +33,15 @@ func TestCancel1(t *testing.T) {
 	cancelChan := make(chan struct{}, 1)
 	for i := 0; i < 10; i++ {
 		go func(i int, cancelCh chan struct{}) {
-			for {
-				if isCanceledByChannel(cancelCh) {
-					break
-				}
+			//for {
+			//	if isCanceledByChannel(cancelCh) {
+			//		break
+			//	}
+			//	time.Sleep(5 * time.Millisecond)
+			//}
+
+			// 等价改法，提升效率和可读性
+			for !isCanceledByChannel(cancelCh) {
 				time.Sleep(5 * time.Millisecond)
 			}
 			fmt.Println(i, "is canceled (cancel1)")
@@ -51,10 +56,7 @@ func TestCancel2(t *testing.T) {
 	cancelChan := make(chan struct{})
 	for i := 0; i < 10; i++ {
 		go func(i int, cancelCh chan struct{}) {
-			for {
-				if isCanceledByChannel(cancelCh) {
-					break
-				}
+			for !isCanceledByChannel(cancelCh) {
 				time.Sleep(5 * time.Millisecond)
 			}
 			fmt.Println(i, "is canceled (cancel2)")

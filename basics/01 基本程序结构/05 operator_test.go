@@ -1,11 +1,16 @@
 package ch01
 
-import "testing"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
 func TestCompareOperator(t *testing.T) {
 	var i int
 	// Go 语言没有前置的 ++/-- （Python 连后置都没有）
-	i += 1
+	// 不支持 assert.Equal(t, 1, i++)，没有后缀自增表达式 i++ 的值语义
+	i++
+	assert.Equal(t, 1, i)
 
 	// 在比较数组时，主流语言比较引用是否相同，但是 Go 语言中：
 	// 1. 相同维数可以比较

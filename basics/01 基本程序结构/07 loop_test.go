@@ -37,7 +37,7 @@ func TestForLoop(t *testing.T) {
 
 func TestLabelBreak(t *testing.T) {
 	var sl = []int{5, 19, 6, 3, 8, 12}
-	var firstEven int = -1
+	var firstEven = -1
 
 	// 不带 label 的 break 语句中断执行并跳出的，
 	// 是同一函数内 break 语句所在的最内层的 for、switch 或 select

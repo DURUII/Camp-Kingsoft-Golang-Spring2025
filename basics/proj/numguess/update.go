@@ -100,12 +100,12 @@ func (m model) UpdatePlaying(msg tea.Msg) (tea.Model, tea.Cmd) {
 func validateInput(input string) (int, error) {
 	val, err := strconv.Atoi(input)
 	if err != nil {
-		return -1, NaN
+		return -1, ErrNaN
 	}
 	if 1 <= val && val <= 100 {
 		return val, nil
 	}
-	return -1, OutOfBounds
+	return -1, ErrOutOfBounds
 }
 
 func (m model) UpdateResult(msg tea.Msg) (tea.Model, tea.Cmd) {

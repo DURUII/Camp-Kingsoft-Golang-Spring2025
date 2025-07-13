@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-var ToIntFilterWrongFormatError = errors.New("ToIntFilterWrongFormatError")
+var ErrToIntFilterWrongFormat = errors.New("ToIntFilterWrongFormatError")
 
 type ToIntFilter struct{}
 
@@ -16,7 +16,7 @@ func NewToIntFilter() *ToIntFilter {
 func (tif *ToIntFilter) Process(data Request) (Response, error) {
 	parts, ok := data.([]string)
 	if !ok {
-		return nil, ToIntFilterWrongFormatError
+		return nil, ErrToIntFilterWrongFormat
 	}
 	var ret []int
 	for _, part := range parts {

@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-var SumFilterWrongFormatError = errors.New("WrongFormatError")
+var ErrSumFilterWrongFormat = errors.New("WrongFormatError")
 
 type SumFilter struct{}
 
@@ -15,7 +15,7 @@ func NewSumFilter() *SumFilter {
 func (sf *SumFilter) Process(data Request) (Response, error) {
 	elems, ok := data.([]int)
 	if !ok {
-		return nil, SumFilterWrongFormatError
+		return nil, ErrSumFilterWrongFormat
 	}
 	ret := 0
 	for _, elm := range elems {

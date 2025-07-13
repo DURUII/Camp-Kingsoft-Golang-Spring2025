@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"log"
 	"user_manage/handlers"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -13,5 +14,7 @@ func main() {
 	router.PUT("/users", handlers.UpdateUser)
 	router.DELETE("/users/:email", handlers.DeleteUser)
 	log.Println("服务器启动，监听端口 :8080")
-	router.Run(":8080")
+	if err := router.Run(":8080"); err != nil {
+		log.Fatal(err)
+	}
 }

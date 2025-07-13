@@ -1,4 +1,4 @@
-module example.com/ch04/sec05
+module advanced/ch01
 
 go 1.24
 
