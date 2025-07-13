@@ -36,14 +36,14 @@ func GetEmployeeByName(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 		err      error
 	)
 	if info, ok = employeeDB[qName]; !ok {
-		w.Write([]byte("{\"error\":\"Not Found\"}"))
+		_, _ = w.Write([]byte("{\"error\":\"Not Found\"}"))
 		return
 	}
 	if infoJson, err = json.Marshal(info); err != nil {
-		w.Write([]byte(fmt.Sprintf("{\"error\":,\"%s\"}", err)))
+		_, _ = w.Write([]byte(fmt.Sprintf("{\"error\":,\"%s\"}", err)))
 		return
 	}
-	w.Write(infoJson)
+	_, _ = w.Write(infoJson)
 }
 
 func main() {

@@ -7,7 +7,7 @@ import (
 )
 
 func createRequest() string {
-	payload := make([]int, 100, 100)
+	payload := make([]int, 100)
 	for i := 0; i < 100; i++ {
 		payload[i] = i
 	}
@@ -23,7 +23,9 @@ func processRequest(reqs []string) []string {
 	reps := []string{}
 	for _, req := range reqs {
 		reqObj := &Request{}
-		reqObj.UnmarshalJSON([]byte(req))
+		if err := reqObj.UnmarshalJSON([]byte(req)); err != nil {
+			panic(err)
+		}
 		//	json.Unmarshal([]byte(req), reqObj)
 
 		var buf strings.Builder
@@ -46,7 +48,9 @@ func processRequestOld(reqs []string) []string {
 	reps := []string{}
 	for _, req := range reqs {
 		reqObj := &Request{}
-		json.Unmarshal([]byte(req), reqObj)
+		if err := json.Unmarshal([]byte(req), reqObj); err != nil {
+			panic(err)
+		}
 		ret := ""
 		for _, e := range reqObj.PayLoad {
 			ret += strconv.Itoa(e) + ","
