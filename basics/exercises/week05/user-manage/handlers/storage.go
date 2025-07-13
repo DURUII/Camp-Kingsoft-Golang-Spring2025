@@ -15,7 +15,9 @@ const filePath = "user.json"
 
 func initStorage() {
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		os.Create("user.json")
+		if _, err := os.Create("user.json"); err != nil {
+			panic(err)
+		}
 	}
 	loadFromFile()
 }
