@@ -24,7 +24,9 @@ func init() {
 }
 
 func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	fmt.Fprint(w, "Welcome!\n")
+	if _, err := fmt.Fprint(w, "Welcome!\n"); err != nil {
+		log.Printf("Error writing response: %v", err)
+	}
 }
 
 func GetEmployeeByName(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -40,7 +42,7 @@ func GetEmployeeByName(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 		return
 	}
 	if infoJson, err = json.Marshal(info); err != nil {
-		_, _ = w.Write([]byte(fmt.Sprintf("{\"error\":,\"%s\"}", err)))
+		fmt.Fprintf(w, "{\"error\":\"%s\"}", err)
 		return
 	}
 	_, _ = w.Write(infoJson)
