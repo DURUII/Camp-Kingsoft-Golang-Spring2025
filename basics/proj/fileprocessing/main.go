@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/mailru/easyjson"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"log"
 	"os"
 	"time"
 
-	. "voc/models/db"
+	"github.com/mailru/easyjson"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+
+	dd "voc/models/db"
 	jd "voc/models/json"
 )
 
@@ -44,7 +45,7 @@ func initDB() *gorm.DB {
 	db.Exec("PRAGMA journal_mode = WAL;")
 
 	// 建表
-	if err := db.AutoMigrate(&Word{}, &Translation{}, &Phrase{}, &Source{}); err != nil {
+	if err := db.AutoMigrate(&dd.Word{}, &dd.Translation{}, &dd.Phrase{}, &dd.Source{}); err != nil {
 		log.Fatal("迁移表结构失败:", err)
 	}
 	return db
@@ -61,8 +62,8 @@ func processSingleFile(db *gorm.DB, path string, srcName string) {
 		log.Fatal("解析 JSON 数据失败:", err)
 	}
 
-	source := Source{SrcName: srcName}
-	if err := db.FirstOrCreate(&source, Source{SrcName: srcName}).Error; err != nil {
+	source := dd.Source{SrcName: srcName}
+	if err := db.FirstOrCreate(&source, dd.Source{SrcName: srcName}).Error; err != nil {
 		log.Fatal("插入来源失败:", err)
 	}
 
@@ -81,9 +82,9 @@ func insertBatch(db *gorm.DB, vocItems jd.VocItemList, srcID uint) error {
 			}
 			batch := vocItems[start:end]
 
-			var words []Word
+			var words []dd.Word
 			for _, item := range batch {
-				words = append(words, Word{
+				words = append(words, dd.Word{
 					Word:  item.Word,
 					SrcID: srcID,
 				})
@@ -92,19 +93,19 @@ func insertBatch(db *gorm.DB, vocItems jd.VocItemList, srcID uint) error {
 				return err
 			}
 
-			var translations []Translation
-			var phrases []Phrase
+			var translations []dd.Translation
+			var phrases []dd.Phrase
 			for i, item := range batch {
 				wid := words[i].ID
 				for _, def := range item.Translations {
-					translations = append(translations, Translation{
+					translations = append(translations, dd.Translation{
 						WordID:      wid,
 						Translation: def.Translation,
 						Type:        def.Type,
 					})
 				}
 				for _, ph := range item.Phrases {
-					phrases = append(phrases, Phrase{
+					phrases = append(phrases, dd.Phrase{
 						WordID:      wid,
 						Phrase:      ph.Phrase,
 						Translation: ph.Translation,
