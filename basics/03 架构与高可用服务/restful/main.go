@@ -42,7 +42,9 @@ func GetEmployeeByName(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 		return
 	}
 	if infoJson, err = json.Marshal(info); err != nil {
-		fmt.Fprintf(w, "{\"error\":\"%s\"}", err)
+		if _, err := fmt.Fprintf(w, "{\"error\":\"%s\"}", err); err != nil {
+			log.Printf("Error writing error response: %v", err)
+		}
 		return
 	}
 	_, _ = w.Write(infoJson)
