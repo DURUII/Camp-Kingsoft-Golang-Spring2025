@@ -8,7 +8,14 @@
     - 🤕 错误处理与测试：单元测试、benchmark、BDD、json 性能调优
     - 🏗️ 架构设计：微内核、管道过滤器
     - ⚡️ 并发基础：mutex、waitgroup、channel 等
-    - `exercises` 和 `proj` 包含在训练营期间的部分限时考核作业的设计文档和代码实现
+    - 🐯 `exercises` 和 `proj` 包含来自 HeadFirst, gophercises, 新未来训练营 等练习/考核的 Solutions
+
+## 工程进阶
+
+- `./advanced` 包含 Go 语言进阶语法和工程实践的样例代码和文档，助你从从熟练到精通：
+    - 🔍 进阶语法：泛型、atomic、context、slog 等新特性和实用包
+    - 🧩 设计模式：装饰器模式、观察者模式等
+    - 🏙️ 工程实践：接口设计、缓存方案、依赖注入、可观测性等
 
 ## 优质在线资源
 
