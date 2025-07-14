@@ -66,11 +66,8 @@ func TestHTTPClientContextCanceled(t *testing.T) {
 	// request
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
-		select {
-		// 上下文取消
-		case <-time.After(350 * time.Millisecond):
-			cancel()
-		}
+		time.Sleep(350 * time.Millisecond)
+		cancel()
 	}()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet,
