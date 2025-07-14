@@ -40,7 +40,6 @@ func TestHTTPClientDeadlineExceeded(t *testing.T) {
 	go func() {
 		_ = NewRouter().Run(":8080")
 	}()
-	time.Sleep(50 * time.Millisecond)
 
 	// request
 	ctx, cancel := context.WithCancel(context.Background())
@@ -51,7 +50,7 @@ func TestHTTPClientDeadlineExceeded(t *testing.T) {
 	require.NoError(t, err)
 
 	// 超时
-	_, err = (&http.Client{Timeout: 500 * time.Millisecond}).Do(req)
+	_, err = (&http.Client{Timeout: 1 * time.Millisecond}).Do(req)
 	require.Error(t, err)
 	assert.ErrorIs(t, err, context.DeadlineExceeded)
 }
