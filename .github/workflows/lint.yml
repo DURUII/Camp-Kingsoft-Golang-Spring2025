@@ -22,15 +22,43 @@ jobs:
         run: |
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.2.1
 
-      - name: Run golangci-lint in all go.mod directories
+      - name: Run golangci-lint on changed modules only
         run: |
-          find . -name 'go.mod' -exec dirname {} \; | while read dir; do
-            echo "Linting $dir"
-            cd "$dir"
-            if [ -z "$(find . -name '*.go')" ]; then
-              echo "No Go files in $dir, skipping."
-              continue
+          set -e
+          # 1) 拿到本次提交跟上一次的差异文件列表
+          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          
+          # 2) 找出每个改动文件的 go.mod 所在模块根目录
+          MODULES=()
+          for f in $CHANGED; do
+            dir=$(dirname "$f")
+            # 向上找 go.mod
+            while [ "$dir" != "." ] && [ ! -f "$dir/go.mod" ]; do
+              dir=$(dirname "$dir")
+            done
+            [ -f "$dir/go.mod" ] && MODULES+=("$dir")
+          done
+          
+          # 3) 去重并只保留最上层的模块（如果 A 是 B 的父路径，就只保留 A）
+          UNIQUE=$(printf "%s\n" "${MODULES[@]}" | sort -u)
+          TOP=()
+          prev=
+          while read mod; do
+            if [ -z "$prev" ] || [[ "$mod"/ != "$prev"/* ]]; then
+              TOP+=("$mod")
+              prev="$mod"
             fi
-            golangci-lint run || exit 1
-            cd -
+          done <<< "$UNIQUE"
+          
+          # 4) 真正跑 lint
+          for mod in "${TOP[@]}"; do
+            echo "Linting module $mod"
+            cd "$mod"
+            # 如果目录里根本没 go 文件就跳过
+            if [ -z "$(find . -maxdepth 1 -name '*.go')" ]; then
+              echo "  → no .go files, skip"
+            else
+              golangci-lint run || exit 1
+            fi
+            cd - >/dev/null
           done
