@@ -23,7 +23,6 @@ const (
 func TestIotaConstSpec(t *testing.T) {
 	t.Log(Sun, Mon, Tue, Wed, Thu, Fri, Sat)
 	require.Equal(t, Sun == Mon, false)
-	require.Equal(t, Tue == Tue, true)
 	// 1. Wed = 3 是不允许的 2. Wed+3 会转换为 Weekday
 	require.Equal(t, Wed+3, Weekday(6))
 }
