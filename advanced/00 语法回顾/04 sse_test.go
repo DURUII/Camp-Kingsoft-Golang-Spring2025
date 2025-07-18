@@ -15,10 +15,15 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// https://api-docs.deepseek.com/zh-cn/api/create-chat-completion
-const (
-	BaseURL = "https://api.deepseek.com"
-)
+const BaseURL = "https://api.deepseek.com"
+
+type Client interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+type APIClient struct {
+	HTTPClient Client
+}
 
 type RequestBody struct {
 	Messages []map[string]string `json:"messages"`
@@ -26,36 +31,41 @@ type RequestBody struct {
 	Stream   bool                `json:"stream"`
 }
 
-type ResponseDelta struct {
-	Content string `json:"content"`
-}
-
-type ResponseChoice struct {
-	Delta ResponseDelta `json:"delta"`
-}
-
-type ChatCompletion struct {
-	ID      string           `json:"id"`
-	Object  string           `json:"object"`
-	Created int              `json:"created"`
-	Model   string           `json:"model"`
-	Choices []ResponseChoice `json:"choices"`
-}
-
 func init() {
-	err := godotenv.Load()
-	if err != nil {
+	if err := godotenv.Load(); err != nil {
 		fmt.Println("Warning: .env file not found - using system environment variables")
 	}
 }
 
-func TestDeepSeekSSE(t *testing.T) {
-	apiKey := os.Getenv("DEEPSEEK_API_KEY")
-	if apiKey == "" {
-		t.Fatal("DEEPSEEK_API_KEY environment variable not set")
+func NewAPIClient() *APIClient {
+	return &APIClient{
+		HTTPClient: http.DefaultClient,
+	}
+}
+
+func (c *APIClient) SendRequest(reqBody RequestBody, apiKey string) (*http.Response, error) {
+	url := BaseURL + "/chat/completions"
+	payload, err := json.Marshal(reqBody)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal request body: %w", err)
 	}
 
-	url := BaseURL + "/chat/completions"
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(payload))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+apiKey)
+
+	return c.HTTPClient.Do(req)
+}
+
+func TestDeepSeekSSE(t *testing.T) {
+	apiKey := os.Getenv("DEEPSEEK_API_KEY")
+	require.NotEmpty(t, apiKey, "DEEPSEEK_API_KEY environment variable not set")
+
+	client := NewAPIClient()
 
 	reqBody := RequestBody{
 		Messages: []map[string]string{
@@ -66,18 +76,13 @@ func TestDeepSeekSSE(t *testing.T) {
 		Stream: true,
 	}
 
-	payload, err := json.Marshal(reqBody)
+	resp, err := client.SendRequest(reqBody, apiKey)
 	require.NoError(t, err)
-
-	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(payload))
-	require.NoError(t, err)
-
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+apiKey)
-
-	resp, err := http.DefaultClient.Do(req)
-	require.NoError(t, err)
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			t.Fatalf("failed to close response body: %v", err)
+		}
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
@@ -96,7 +101,14 @@ func TestDeepSeekSSE(t *testing.T) {
 				break
 			}
 
-			var chunk ChatCompletion
+			var chunk struct {
+				Choices []struct {
+					Delta struct {
+						Content string `json:"content"`
+					} `json:"delta"`
+				} `json:"choices"`
+			}
+
 			if err := json.Unmarshal([]byte(data), &chunk); err != nil {
 				t.Logf("JSON parse error: %v", err)
 				continue
@@ -118,7 +130,11 @@ func TestDeepSeekSSE(t *testing.T) {
 	output := map[string]string{"response": fullResponse.String()}
 	file, err := os.Create("output.json")
 	require.NoError(t, err)
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			t.Fatalf("failed to close file: %v", err)
+		}
+	}()
 
 	encoder := json.NewEncoder(file)
 	encoder.SetIndent("", "  ")
