@@ -39,8 +39,8 @@ func (sb *ServerBuilder) New(addr string, port int) *ServerBuilder {
 		sb.Err = errors.Join(sb.Err, ErrInvalidPort)
 	}
 
-	sb.Server.Addr = addr
-	sb.Server.Port = port
+	sb.Addr = addr
+	sb.Port = port
 	return sb
 }
 
@@ -49,7 +49,7 @@ func (sb *ServerBuilder) WithProtocol(protocol string) *ServerBuilder {
 		sb.Err = errors.Join(sb.Err, ErrInvalidProtocol)
 		return sb
 	}
-	sb.Server.Protocol = protocol
+	sb.Protocol = protocol
 	return sb
 }
 
@@ -57,7 +57,7 @@ func (sb *ServerBuilder) WithMaxConn(maxConn int) *ServerBuilder {
 	if maxConn < 0 {
 		sb.Err = errors.Join(sb.Err, ErrInvalidMaxConn)
 	}
-	sb.Server.MaxConn = maxConn
+	sb.MaxConn = maxConn
 	return sb
 }
 
@@ -65,13 +65,10 @@ func (sb *ServerBuilder) WithTimeout(timeout time.Duration) *ServerBuilder {
 	if timeout <= 0 {
 		sb.Err = errors.Join(sb.Err, ErrInvalidTimeout)
 	}
-	sb.Server.Timeout = timeout
+	sb.Timeout = timeout
 	return sb
 }
 
 func (sb *ServerBuilder) Build() (*Server, error) {
-	if sb.Err != nil {
-		return nil, sb.Err
-	}
-	return &sb.Server, nil
+	return &sb.Server, sb.Err
 }
