@@ -3,6 +3,7 @@ package ch00
 import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"reflect"
 	"testing"
 )
 
@@ -18,11 +19,11 @@ func TestTypeConversion(t *testing.T) {
 	var j = 1
 	// 无法将 'i' (类型 myInt) 用作类型 int
 	i = myInt(j)
-	assert.Equal(t, 1, i)
+	assert.Equal(t, false, reflect.DeepEqual(i, 1))
 	require.Equal(t, true, i == 1)
 
-	//var p myMap
-	//var q = map[int]string{1: "one"}
-	//p = q
-	//assert.Equal(t, p, q)
+	var p myMap
+	var q = map[int]string{1: "one"}
+	p = q
+	assert.Equal(t, false, reflect.DeepEqual(p, q))
 }

@@ -3,6 +3,7 @@ module advanced/ch00
 go 1.24
 
 require (
+	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/exp v0.0.0-20250711185948-6ae5c78190dc
 )
